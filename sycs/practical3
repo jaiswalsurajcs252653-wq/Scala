@@ -1,0 +1,24 @@
+package practical3
+import scala.util.Random
+
+object VarianceSD {
+
+  def main(args: Array[String]): Unit = {
+
+    val data = List.fill(10)(Random.nextInt(100))
+
+    println("Random Numbers:")
+    println(data)
+
+    val mean = data.sum.toDouble / data.length
+
+    val variance =
+      data.map(x => math.pow(x - mean, 2)).sum / data.length
+
+    val standardDeviation = math.sqrt(variance)
+
+    println("Mean = " + mean)
+    println("Variance = " + variance)
+    println("Standard Deviation = " + standardDeviation)
+  }
+}
