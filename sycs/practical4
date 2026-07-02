@@ -1,0 +1,19 @@
+import breeze.linalg._
+
+object VectorExample {
+
+  def main(args: Array[String]): Unit = {
+
+    val v1 = DenseVector(1.0, 2.0, 3.0, 4.0)
+    val v2 = DenseVector(5.0, 6.0, 7.0, 8.0)
+
+    println("Vector 1 = " + v1)
+    println("Vector 2 = " + v2)
+
+    println("Sum = " + sum(v1))
+
+    println("Mean = " + breeze.stats.mean(v1))
+
+    println("Dot Product = " + (v1 dot v2))
+  }
+}
