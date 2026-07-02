@@ -1,0 +1,19 @@
+import breeze.linalg._
+import scala.util.Random
+
+object MatrixExample {
+
+  def main(args: Array[String]): Unit = {
+
+    val matrix = DenseMatrix.rand[Double](3, 3)
+
+    println("Random Matrix:")
+    println(matrix)
+
+    println("\nTranspose:")
+    println(matrix.t)
+
+    println("\nDeterminant:")
+    println(det(matrix))
+  }
+}
