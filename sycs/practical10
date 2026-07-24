@@ -1,0 +1,32 @@
+import com.github.tototoshi.csv._
+
+object Q10 extends App {
+
+  val reader = CSVReader.open("src/main/resources/data.csv")
+
+  val data = reader.all()
+
+  reader.close()
+
+  val header = data.head
+  val rows = data.tail
+
+  // Filter condition
+  val threshold = 60000.0
+
+  println("Employees with Salary greater than " + threshold)
+  println("-----------------------------------------------")
+
+  // Print Header
+  println(header.mkString("\t"))
+
+  // Print Filtered Rows
+  rows.foreach { row =>
+    val salary = row(2).toDouble   // Salary column
+
+    if (salary > threshold) {
+      println(row.mkString("\t"))
+    }
+  }
+
+}
