@@ -1,0 +1,32 @@
+import com.github.tototoshi.csv._
+
+object Q8 extends App {
+
+  val reader = CSVReader.open("src/main/resources/data.csv")
+
+  val data = reader.all()
+  reader.close()
+
+  val header = data.head
+
+  val rows = data.tail
+
+  for (col <- 1 until header.length) {
+
+    val values = rows.map(row => row(col).toDouble)
+
+    val count = values.length
+    val sum = values.sum
+    val average = sum / count
+    val minimum = values.min
+    val maximum = values.max
+
+    println("Column Name : " + header(col))
+    println("Count       : " + count)
+    println("Sum         : " + sum)
+    println("Average     : " + average)
+    println("Minimum     : " + minimum)
+    println("Maximum     : " + maximum)
+  }
+
+}
