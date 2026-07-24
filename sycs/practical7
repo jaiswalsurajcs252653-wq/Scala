@@ -1,0 +1,39 @@
+import breeze.linalg._
+
+object Q7 extends App {
+
+  val matrix1 = DenseMatrix(
+    (10.0, 20.0),
+    (30.0, 40.0)
+  )
+
+  val matrix2 = DenseMatrix(
+    (2.0, 4.0),
+    (5.0, 10.0)
+  )
+
+  println("Matrix 1:")
+  println(matrix1)
+
+  println("\nMatrix 2:")
+  println(matrix2)
+
+  println("\nElement-wise Addition:")
+  println(matrix1 + matrix2)
+
+  println("\nElement-wise Subtraction:")
+  println(matrix1 - matrix2)
+
+  println("\nElement-wise Multiplication:")
+  val multiplication = DenseMatrix.tabulate[Double](matrix1.rows, matrix1.cols) {
+    (i, j) => matrix1(i, j) * matrix2(i, j)
+  }
+  println(multiplication)
+
+  println("\nElement-wise Division:")
+  val division = DenseMatrix.tabulate[Double](matrix1.rows, matrix1.cols) {
+    (i, j) => matrix1(i, j) / matrix2(i, j)
+  }
+  println(division)
+
+}
