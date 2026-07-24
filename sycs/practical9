@@ -1,0 +1,48 @@
+import com.github.tototoshi.csv._
+
+object Q9 extends App {
+
+  val reader = CSVReader.open("src/main/resources/data.csv")
+  val rows = reader.all()
+  reader.close()
+
+  val header = rows.head
+  val data = rows.tail
+
+  val cols = header.length
+
+
+  val means = (1 until cols).map { col =>
+
+    val values = data.flatMap { row =>
+      if (row(col).trim.isEmpty) None
+      else Some(row(col).toDouble)
+    }
+
+    values.sum / values.length
+
+  }
+
+  println("Data after replacing missing values:\n")
+
+  println(header.mkString(","))
+
+  data.foreach { row =>
+
+    val updated = row.zipWithIndex.map {
+
+      case (value, 0) =>
+        value
+
+      case (value, index) =>
+        if (value.trim.isEmpty)
+          f"${means(index - 1)}%.2f"
+        else
+          value
+    }
+
+    println(updated.mkString(","))
+
+  }
+
+}
