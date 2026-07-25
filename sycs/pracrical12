@@ -1,0 +1,40 @@
+import com.github.tototoshi.csv._
+
+object Q12 extends App {
+
+  val reader = CSVReader.open("src/main/resources/data.csv")
+
+  val data = reader.all()
+
+  reader.close()
+
+  val header = data.head
+
+  val rows = data.tail
+
+  val categoryIndex = 1
+
+  val categories = rows.map(_(categoryIndex)).distinct.sorted
+
+  println("One-Hot Encoded Dataset")
+  println("=" * 100)
+
+  val newHeader =
+    Seq("App", "Rating") ++ categories
+
+  println(newHeader.mkString("\t"))
+
+  rows.take(20).foreach { row =>
+
+    val app = row(0)
+    val rating = row(2)
+    val category = row(categoryIndex)
+
+    val encoded = categories.map { c =>
+      if (c == category) "1" else "0"
+    }
+
+    println((Seq(app, rating) ++ encoded).mkString("\t"))
+  }
+
+}
