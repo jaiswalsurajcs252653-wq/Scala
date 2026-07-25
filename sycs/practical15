@@ -1,0 +1,32 @@
+import breeze.linalg._
+import breeze.plot._
+import com.github.tototoshi.csv._
+
+object Q15 extends App {
+
+  val reader = CSVReader.open("src/main/resources/data.csv")
+
+  val data = reader.all()
+  reader.close()
+
+  val rows = data.tail
+
+  val x = DenseVector((1 to rows.length).map(_.toDouble).toArray)
+
+  val y = DenseVector(
+    rows.map(row => row(4).toDouble).toArray
+  )
+
+  val fig = Figure("Apple Stock Line Graph")
+
+  val plt = fig.subplot(0)
+
+  plt += plot(x, y)
+
+  plt.xlabel = "Trading Days"
+  plt.ylabel = "Closing Price ($)"
+  plt.title = "Apple Stock Closing Price"
+
+  // Show Graph
+  fig.refresh()
+}
