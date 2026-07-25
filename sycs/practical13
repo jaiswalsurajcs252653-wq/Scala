@@ -1,0 +1,60 @@
+import breeze.linalg._
+import breeze.plot._
+import com.github.tototoshi.csv._
+import java.awt.Color
+
+object Q13 extends App {
+
+  val reader = CSVReader.open("src/main/resources/data.csv")
+  val data = reader.all()
+  reader.close()
+
+  val rows = data.tail
+
+  // Store valid Age and CGPA values
+  val points = rows.flatMap { row =>
+    try {
+
+      val age = row(2).trim.toDouble
+
+      val cgpa = row(5).trim match {
+        case "0 - 1.99"      => 1.0
+        case "2.00 - 2.49"   => 2.25
+        case "2.50 - 2.99"   => 2.75
+        case "3.00 - 3.49"   => 3.25
+        case "3.50 - 4.00"   => 3.75
+        case "3.50 - 4.00 "  => 3.75
+        case _               => throw new Exception("Invalid CGPA")
+      }
+
+      Some((age, cgpa))
+
+    } catch {
+      case _: Exception => None
+    }
+  }
+
+  val x = DenseVector(points.map(_._1).toArray)
+  val y = DenseVector(points.map(_._2).toArray)
+
+  val fig = Figure("Student Mental Health Dataset")
+
+  val plt = fig.subplot(0)
+
+  // Scatter Plot
+  plt += scatter(
+    x,
+    y,
+    _ => 0.1,
+    _ => Color.BLUE
+  )
+
+  // Labels
+  plt.xlabel = "Age (Years)"
+  plt.ylabel = "CGPA"
+
+  // Title
+  plt.title = "Age vs CGPA Scatter Plot"
+
+  fig.refresh()
+}
