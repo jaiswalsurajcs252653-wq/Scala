@@ -1,0 +1,27 @@
+import scala.io.Source
+
+object Q11 extends App {
+
+  val source = Source.fromFile("src/main/resources/sample.txt")
+
+  val text = source.getLines().mkString(" ")
+
+  source.close()
+
+  val words = text
+    .toLowerCase()
+    .replaceAll("[^a-z ]", "")
+    .split("\\s+")
+    .filter(_.nonEmpty)
+
+  val wordCount = words.groupBy(identity).view.mapValues(_.length).toMap
+
+  println("Word Frequencies:")
+  println("---------------------------")
+
+  wordCount.toSeq
+    .sortBy(_._1)
+    .foreach { case (word, count) =>
+      println(f"$word%-15s -> $count")
+    }
+}
